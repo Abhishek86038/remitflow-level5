@@ -13,6 +13,7 @@ function App() {
   const [limit, setLimit] = useState(0);
   const [history, setHistory] = useState([]);
   const [events, setEvents] = useState([]);
+  const [activeTracker, setActiveTracker] = useState(null);
   
   // Remittance Form State
   const [recipient, setRecipient] = useState('');
@@ -72,14 +73,47 @@ function App() {
 
     try {
       setLoading(true);
+      
+      // Step 0: Sent
+      setActiveTracker({
+        recipient,
+        amount,
+        currentStep: 0,
+        label: 'Transaction Initiated'
+      });
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Step 1: Compliance Check
+      setActiveTracker(prev => ({
+        ...prev,
+        currentStep: 1,
+        label: 'Verifying Compliance & Limits'
+      }));
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Step 2: Escrow Lock & Deposit
+      setActiveTracker(prev => ({
+        ...prev,
+        currentStep: 2,
+        label: 'Escrow Locking...'
+      }));
+
       const res = await deposit(address, recipient, amount);
       if (res.success) {
         toast.success(`Funds deposited! Hash: ${res.hash.slice(0,10)}...`);
+        
+        setActiveTracker(prev => ({
+          ...prev,
+          currentStep: 2,
+          label: 'Escrow Locked (XLM Deposited)'
+        }));
+        
         setAmount('');
         setRecipient('');
         loadData();
       }
     } catch (e) {
+      setActiveTracker(null);
       toast.error(e.message || 'Deposit failed');
     } finally {
       setLoading(false);
@@ -89,9 +123,29 @@ function App() {
   const handleRelease = async (transferId) => {
     if (!address) return toast.error('Please connect your wallet first');
     try {
+      const transferObj = history.find(t => t.id === transferId);
+      if (transferObj) {
+        setActiveTracker({
+          recipient: transferObj.recipient,
+          amount: transferObj.amount,
+          currentStep: 2,
+          label: 'Releasing Escrowed Funds...'
+        });
+      }
+
       const res = await releaseFunds(address, transferId);
       if (res.success) {
         toast.success(`Funds released! Hash: ${res.hash.slice(0,10)}...`);
+        
+        if (transferObj) {
+          setActiveTracker({
+            recipient: transferObj.recipient,
+            amount: transferObj.amount,
+            currentStep: 3,
+            label: 'Funds Released successfully'
+          });
+        }
+        
         loadData();
       }
     } catch (e) {
@@ -278,46 +332,66 @@ function App() {
             </div>
           </div>
           
-          {/* Transfer Status Tracker visualizer (using the latest active transfer if any) */}
-          {history.length > 0 && (
+          {/* Transfer Status Tracker visualizer (using the latest active transfer or activeTracker) */}
+          {(activeTracker || history.length > 0) && (
             <div className="glass-card p-[24px] relative overflow-hidden">
-              <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-4">Latest Transfer Status</h2>
               {(() => {
                 const latest = history[history.length - 1];
+                const activeObj = activeTracker || (latest ? {
+                  recipient: latest.recipient,
+                  amount: latest.amount,
+                  currentStep: latest.status === 'Pending' ? 2 : 3,
+                  label: latest.status === 'Pending' ? 'Escrow Locked' : 'Released'
+                } : null);
+
+                if (!activeObj) return null;
+
                 const steps = ['Sent', 'Compliance Check', 'Escrow Locked', 'Released'];
-                const currentStep = latest.status === 'Pending' ? 2 : 3;
+                const currentStep = activeObj.currentStep;
 
                 return (
-                  <div className="relative py-2">
-                    <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2 rounded-full"></div>
-                    <div 
-                      className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 -translate-y-1/2 rounded-full transition-all duration-1000"
-                      style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-                    ></div>
-                    
-                    <div className="relative flex justify-between">
-                      {steps.map((step, idx) => {
-                        const isCompleted = idx <= currentStep;
-                        const isActive = idx === currentStep;
-                        return (
-                          <div key={idx} className="flex flex-col items-center">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all duration-500 ${
-                              isCompleted 
-                                ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md shadow-cyan-500/25 text-white' 
-                                : 'bg-slate-900 border border-white/5 text-slate-600'
-                            } ${isActive ? 'scale-110 ring-4 ring-cyan-500/10' : ''}`}>
-                              {isCompleted ? <CheckCircle size={15} /> : <Lock size={12} />}
-                            </div>
-                            <span className={`mt-3 text-[10px] font-bold uppercase tracking-wider text-center w-20 ${
-                              isCompleted ? 'text-slate-300' : 'text-slate-600'
-                            }`}>
-                              {step}
-                            </span>
-                          </div>
-                        );
-                      })}
+                  <>
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase">
+                        Latest Transfer Status
+                      </h2>
+                      <span className="text-[11px] font-semibold bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-cyan-400 flex items-center gap-1.5 shadow-inner">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                        {activeObj.label} ({activeObj.amount} XLM to {activeObj.recipient.slice(0, 6)}...{activeObj.recipient.slice(-4)})
+                      </span>
                     </div>
-                  </div>
+                    
+                    <div className="relative py-2">
+                      <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2 rounded-full"></div>
+                      <div 
+                        className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 -translate-y-1/2 rounded-full transition-all duration-1000"
+                        style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                      ></div>
+                      
+                      <div className="relative flex justify-between">
+                        {steps.map((step, idx) => {
+                          const isCompleted = idx <= currentStep;
+                          const isActive = idx === currentStep;
+                          return (
+                            <div key={idx} className="flex flex-col items-center">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all duration-500 ${
+                                isCompleted 
+                                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-md shadow-cyan-500/25 text-white' 
+                                  : 'bg-slate-900 border border-white/5 text-slate-600'
+                              } ${isActive ? 'scale-110 ring-4 ring-cyan-500/10' : ''}`}>
+                                {isCompleted ? <CheckCircle size={15} /> : <Lock size={12} />}
+                              </div>
+                              <span className={`mt-3 text-[10px] font-bold uppercase tracking-wider text-center w-20 ${
+                                isCompleted ? 'text-slate-300' : 'text-slate-600'
+                              }`}>
+                                {step}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
                 );
               })()}
             </div>
