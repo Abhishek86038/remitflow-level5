@@ -113,8 +113,8 @@ function App() {
           <div className="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2 rounded-xl shadow-lg shadow-cyan-500/20">
             <Activity size={22} className="text-white animate-pulse" />
           </div>
-          <h1 className="text-2xl tracking-tight select-none">
-            <span className="logo-remit text-white">Remit</span>
+          <h1 className="text-3xl tracking-tight select-none">
+            <span className="logo-remit text-white font-extrabold">Remit</span>
             <span className="logo-flow text-cyan-400 ml-0.5">Flow</span>
           </h1>
         </div>
@@ -136,7 +136,7 @@ function App() {
           ) : (
             <button 
               onClick={handleConnect} 
-              className="premium-btn px-6 py-2.5 text-sm font-semibold tracking-wide text-white hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+              className="connect-wallet-btn px-6 text-sm font-semibold tracking-wide text-white transition-all flex items-center gap-2"
             >
               <Wallet size={16} />
               Connect Wallet
@@ -337,32 +337,38 @@ function App() {
           )}
 
           {/* Live Activity Feed */}
-          <div className="premium-card padding-asymmetric-md">
-            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-6 flex items-center gap-2">
-              <Activity className="text-cyan-400" size={16} /> Live Activity Feed
+          <div className="premium-card height-feed padding-asymmetric-md relative overflow-hidden mt-8 flex flex-col justify-between">
+            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-6 flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Activity className="text-cyan-400" size={16} /> Live Activity Feed
+              </span>
+              <span className="text-[10px] font-bold tracking-widest text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">TESTNET</span>
             </h2>
-            {events.length === 0 ? (
-              <div className="text-center py-6 text-slate-500 text-xs border border-dashed border-white/5 rounded-xl">
-                No recent events found on Testnet.
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {events.map((ev, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-3.5 rounded-xl border border-white/5 transition-all">
-                    <div className="bg-cyan-500/10 text-cyan-400 p-2 rounded-lg">
-                      <Activity size={14} className="animate-pulse" />
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex justify-between items-center">
-                        <p className="text-xs font-semibold text-slate-200">Contract Event Emitted</p>
-                        <span className="text-[10px] font-mono text-slate-500">Ledger: {ev.ledger}</span>
+            
+            <div className="flex-grow overflow-y-auto pr-1 max-h-[140px]">
+              {events.length === 0 ? (
+                <div className="text-center py-6 text-slate-500 text-xs border border-dashed border-white/5 rounded-xl">
+                  No recent events found on Testnet.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {events.map((ev, i) => (
+                    <div key={i} className="flex items-center gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-3.5 rounded-xl border border-white/5 transition-all">
+                      <div className="bg-cyan-500/10 text-cyan-400 p-2 rounded-lg">
+                        <Activity size={14} className="animate-pulse" />
                       </div>
-                      <p className="text-[10px] text-slate-400 font-mono mt-0.5 truncate max-w-md" title={ev.id}>ID: {ev.id}</p>
+                      <div className="flex-grow">
+                        <div className="flex justify-between items-center">
+                          <p className="text-xs font-semibold text-slate-200">Contract Event Emitted</p>
+                          <span className="text-[10px] font-mono text-slate-500">Ledger: {ev.ledger}</span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 font-mono mt-0.5 truncate max-w-md" title={ev.id}>ID: {ev.id}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
         </div>

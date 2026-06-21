@@ -114,6 +114,10 @@ body {
   min-height: 390px;
 }
 
+.height-feed {
+  min-height: 220px;
+}
+
 /* Custom human-designer padding */
 .padding-asymmetric-lg {
   padding: 14px 29px 46px 29px !important;
@@ -155,6 +159,34 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 600;
+}
+
+/* Connect Wallet Custom Button (cyan border + dark background) */
+.connect-wallet-btn {
+  background: rgba(10, 14, 39, 0.6);
+  border: 1.5px solid var(--cyan-glow);
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 15px rgba(0, 180, 216, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+}
+
+.connect-wallet-btn:hover {
+  background: rgba(0, 180, 216, 0.1);
+  box-shadow: 0 0 25px rgba(0, 180, 216, 0.35);
+  transform: translateY(-2px);
+  border-color: #FFFFFF;
+}
+
+.connect-wallet-btn:active {
+  transform: translateY(0);
 }
 
 /* Glow shadow button */
