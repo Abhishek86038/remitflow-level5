@@ -21,9 +21,19 @@ export const deposit = async (senderAddress, recipientAddress, amount) => {
             .build();
             
         // First simulate to check compliance
-        const simulated = await rpcServer.simulateTransaction(tx);
+        let simulated;
+        try {
+            simulated = await rpcServer.simulateTransaction(tx);
+        } catch (simError) {
+            console.error("simulateTransaction completely failed:", simError);
+            throw new Error(`RPC simulation crashed: ${simError.message}. Check if your address has sufficient XLM or if limit is exceeded.`);
+        }
         if (rpc.Api.isSimulationError(simulated)) {
             throw new Error(simulated.error);
+        }
+        if (!simulated.result) {
+            console.error("Simulation failed without result:", JSON.stringify(simulated, null, 2));
+            throw new Error("🚨 SIMULATION FAILED: 'simulated.result' is undefined! Please Hard Refresh the page.");
         }
 
         const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
@@ -73,9 +83,18 @@ export const releaseFunds = async (recipientAddress, transferId) => {
             .setTimeout(30)
             .build();
             
-        const simulated = await rpcServer.simulateTransaction(tx);
+        let simulated;
+        try {
+            simulated = await rpcServer.simulateTransaction(tx);
+        } catch (simError) {
+            throw new Error(`RPC simulation crashed: ${simError.message}`);
+        }
         if (rpc.Api.isSimulationError(simulated)) {
             throw new Error(simulated.error);
+        }
+        if (!simulated.result) {
+            console.error("Simulation failed without result:", JSON.stringify(simulated, null, 2));
+            throw new Error("🚨 SIMULATION FAILED: 'simulated.result' is undefined! Please Hard Refresh the page.");
         }
 
         const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
