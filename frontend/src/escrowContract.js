@@ -36,7 +36,7 @@ export const deposit = async (senderAddress, recipientAddress, amount) => {
             throw new Error("🚨 SIMULATION FAILED: 'simulated.result' is undefined! Please Hard Refresh the page.");
         }
 
-        const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
+        const assembledTx = rpc.assembleTransaction(tx, simulated).build();
         const signedTxXdr = await signTx(assembledTx.toXDR(), senderAddress);
         
         const response = await rpcServer.sendTransaction(TransactionBuilder.fromXDR(signedTxXdr, networkPassphrase));
@@ -97,7 +97,7 @@ export const releaseFunds = async (recipientAddress, transferId) => {
             throw new Error("🚨 SIMULATION FAILED: 'simulated.result' is undefined! Please Hard Refresh the page.");
         }
 
-        const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
+        const assembledTx = rpc.assembleTransaction(tx, simulated).build();
         const signedTxXdr = await signTx(assembledTx.toXDR(), recipientAddress);
         
         const response = await rpcServer.sendTransaction(TransactionBuilder.fromXDR(signedTxXdr, networkPassphrase));
