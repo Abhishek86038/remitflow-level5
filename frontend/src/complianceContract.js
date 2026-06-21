@@ -12,10 +12,10 @@ export const checkCompliance = async (senderAddress, amount) => {
         const txBuilder = await buildTransaction(senderAddress);
         
         const tx = txBuilder
-            .addOperation(contract.call('check_compliance', [
+            .addOperation(contract.call('check_compliance',
                 nativeToScVal(senderAddress, { type: 'address' }),
                 nativeToScVal(amount, { type: 'i128' })
-            ]))
+            ))
             .setTimeout(30)
             .build();
             

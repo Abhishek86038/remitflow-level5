@@ -12,11 +12,11 @@ export const deposit = async (senderAddress, recipientAddress, amount) => {
         const txBuilder = await buildTransaction(senderAddress);
         
         const tx = txBuilder
-            .addOperation(contract.call('deposit', [
+            .addOperation(contract.call('deposit',
                 nativeToScVal(senderAddress, { type: 'address' }),
                 nativeToScVal(recipientAddress, { type: 'address' }),
                 nativeToScVal(amount, { type: 'i128' })
-            ]))
+            ))
             .setTimeout(30)
             .build();
             
@@ -66,10 +66,10 @@ export const releaseFunds = async (recipientAddress, transferId) => {
         const txBuilder = await buildTransaction(recipientAddress);
         
         const tx = txBuilder
-            .addOperation(contract.call('release_funds', [
+            .addOperation(contract.call('release_funds',
                 nativeToScVal(recipientAddress, { type: 'address' }),
                 nativeToScVal(transferId, { type: 'u64' })
-            ]))
+            ))
             .setTimeout(30)
             .build();
             
@@ -94,9 +94,9 @@ export const getTransferStatus = async (senderAddress, transferId) => {
         const txBuilder = await buildTransaction(senderAddress || 'GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA');
         
         const tx = txBuilder
-            .addOperation(contract.call('get_transfer_status', [
+            .addOperation(contract.call('get_transfer_status',
                 nativeToScVal(transferId, { type: 'u64' })
-            ]))
+            ))
             .setTimeout(30)
             .build();
             
@@ -115,9 +115,9 @@ export const getTransferHistory = async (address) => {
         const txBuilder = await buildTransaction(address || 'GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA');
         
         const tx = txBuilder
-            .addOperation(contract.call('get_transfer_history', [
+            .addOperation(contract.call('get_transfer_history',
                 nativeToScVal(address, { type: 'address' })
-            ]))
+            ))
             .setTimeout(30)
             .build();
             
