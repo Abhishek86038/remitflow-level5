@@ -101,11 +101,7 @@ function App() {
 
   return (
     <div className="min-h-screen text-white font-sans relative z-10 selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Dynamic Backgrounds & Textures */}
-      <div className="grain-overlay" />
-      <div className="dot-grid" />
-      
-      <ToastContainer theme="dark" toastClassName="premium-card !border-white/10 !bg-slate-950/80 !backdrop-blur-md" />
+      <ToastContainer theme="dark" toastClassName="glass-card !border-white/10 !bg-slate-950/80 !backdrop-blur-md" />
       
       {/* Navigation Header */}
       <nav className="glassmorphism flex justify-between items-center py-5 px-8 sticky top-0 z-50 border-b border-white/5 bg-slate-950/20 backdrop-blur-xl">
@@ -113,17 +109,17 @@ function App() {
           <div className="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2 rounded-xl shadow-lg shadow-cyan-500/20">
             <Activity size={22} className="text-white animate-pulse" />
           </div>
-          <h1 className="text-3xl tracking-tight select-none">
-            <span className="logo-remit text-white font-extrabold">Remit</span>
-            <span className="logo-flow text-cyan-400 ml-0.5">Flow</span>
+          <h1 className="text-[32px] font-bold select-none tracking-tight">
+            <span className="font-[Inter] text-white">Remit</span>
+            <span className="font-[Stellar_Display] rotate-[1.5deg] inline-block ml-1 text-cyan-400">Flow</span>
           </h1>
         </div>
         
         <div className="flex gap-4 items-center">
           {address ? (
             <div className="flex items-center gap-4">
-              <span className="text-xs bg-white/5 px-4 py-2.5 rounded-full font-mono shadow-inner border border-white/5 flex items-center gap-2">
-                <span className="green-dot-glow"></span>
+              <span className="text-xs bg-white/5 px-4 py-2.5 rounded-full font-mono shadow-inner border border-white/5 flex items-center">
+                <span className="w-2 h-2 bg-green-400 rounded-full inline-block mr-2"></span>
                 {address.slice(0,6)}...{address.slice(-4)}
               </span>
               <button 
@@ -136,7 +132,7 @@ function App() {
           ) : (
             <button 
               onClick={handleConnect} 
-              className="connect-wallet-btn px-6 text-sm font-semibold tracking-wide text-white transition-all flex items-center gap-2"
+              className="px-6 h-[42px] rounded-[14px] border border-[#00B4D8] bg-[#00B4D8]/10 text-[#00B4D8] font-medium hover:bg-[#00B4D8]/20 transition-all flex items-center gap-2"
             >
               <Wallet size={16} />
               Connect Wallet
@@ -146,56 +142,50 @@ function App() {
       </nav>
 
       {/* Main Grid Content */}
-      <main className="container mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6 relative z-10">
+      <main className="grid grid-cols-3 gap-[29px] p-[46px] relative z-10">
         
-        {/* Left Column - Send Form & Limit (Asymmetric Heights) */}
-        <div className="lg:col-span-1 space-y-8 flex flex-col justify-start">
+        {/* Left Column */}
+        <div className="flex flex-col gap-[29px]">
           
           {/* Compliance Limit Card */}
-          <div className="premium-card height-compliance padding-asymmetric-md relative overflow-hidden group flex flex-col justify-between">
+          <div className="glass-card h-[180px] p-[24px] flex flex-col justify-between relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full -z-10 group-hover:bg-cyan-500/10 transition-all duration-700"></div>
             <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase flex items-center gap-2">
               <ShieldCheck className="text-cyan-400" size={16} /> Compliance Check
             </h2>
-            <div className="mt-4">
+            <div>
               <p className="text-slate-500 text-xs font-medium uppercase tracking-widest mb-1">Maximum Limit</p>
-              <div className="flex items-baseline gap-2">
-                <span className="display-limit-number bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-                  {limit}
-                </span>
-                <span className="display-limit-unit text-cyan-400">
-                  XLM
-                </span>
-              </div>
+              <p className="text-[52px] font-bold tracking-tight leading-none">
+                {limit} <span className="text-[18px] uppercase tracking-[2px] text-[#00B4D8]">XLM</span>
+              </p>
             </div>
           </div>
 
           {/* Send Remittance Card */}
-          <div className="premium-card height-send padding-asymmetric-lg relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
-            <h2 className="text-lg font-bold tracking-tight text-white mb-6 flex items-center gap-2">
+          <div className="glass-card h-[320px] p-[28px] relative overflow-hidden flex flex-col justify-between">
+            <h2 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
               Send Remittance
             </h2>
-            <form onSubmit={handleSend} className="space-y-5">
+            <form onSubmit={handleSend} className="space-y-4 my-auto">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Recipient Address</label>
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Recipient Address</label>
                 <input 
                   type="text" 
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
                   placeholder="G..." 
-                  className="w-full premium-input px-4 py-3 text-white placeholder-slate-600 focus:outline-none font-mono text-xs"
+                  className="w-full premium-input px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Amount</label>
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Amount</label>
                 <div className="relative">
                   <input 
                     type="number" 
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.00" 
-                    className="w-full premium-input px-4 py-3 text-white placeholder-slate-600 focus:outline-none font-mono text-sm pr-12"
+                    className="w-full premium-input px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none font-mono text-sm pr-12"
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-cyan-400 tracking-wider">XLM</span>
                 </div>
@@ -204,17 +194,14 @@ function App() {
               <button 
                 disabled={loading}
                 type="submit" 
-                className="w-full premium-btn text-white disabled:opacity-50 flex justify-center items-center gap-2 group/btn cursor-pointer"
+                className="w-full h-[48px] rounded-[16px] bg-gradient-to-r from-[#00B4D8] to-[#0077FF] font-semibold text-white hover:shadow-lg hover:shadow-cyan-500/30 transition-all hover:-translate-y-[2px] disabled:opacity-50 flex justify-center items-center gap-2 cursor-pointer"
               >
                 {loading ? (
-                  <span className="animate-pulse flex items-center gap-2 text-sm">
-                    Processing...
-                  </span>
+                  <span className="animate-pulse">Processing...</span>
                 ) : (
                   <>
-                    <span className="text-sm font-bold tracking-wide">Send Funds</span>
-                    <Sparkles size={14} className="sparkle-icon text-cyan-200" />
-                    <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                    Send Funds →
+                    <Sparkles size={14} className="text-cyan-200" />
                   </>
                 )}
               </button>
@@ -223,18 +210,18 @@ function App() {
           
         </div>
 
-        {/* Right Column - Status Tracker & History */}
-        <div className="lg:col-span-2 space-y-8">
+        {/* Right Column - Span 2 */}
+        <div className="col-span-2 flex flex-col gap-[29px]">
           
           {/* Transfer History Card */}
-          <div className="premium-card height-history padding-asymmetric-lg relative overflow-hidden flex flex-col">
-            <h2 className="text-lg font-bold tracking-tight text-white mb-6 flex items-center gap-2">
-              <History className="text-blue-400" size={18} /> Transfer History
+          <div className="glass-card h-[380px] p-[28px] relative overflow-hidden flex flex-col">
+            <h2 className="text-lg font-bold tracking-tight text-white mb-4 flex items-center gap-2">
+              <History className="text-[#00B4D8]" size={18} /> Transfer History
             </h2>
             
             <div className="flex-grow overflow-y-auto pr-1">
               {history.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 px-4 text-center border border-dashed border-white/5 rounded-2xl bg-white/[0.01]">
+                <div className="flex flex-col items-center justify-center h-full text-center">
                   <p className="text-sm font-medium text-slate-400">
                     Abhi tak koi transfer nahi hua. Pehla XLM bhejne ke liye ready?
                   </p>
@@ -244,22 +231,22 @@ function App() {
                   <table className="w-full text-left premium-table">
                     <thead>
                       <tr className="text-slate-500 text-xs uppercase tracking-wider">
-                        <th className="pb-3 font-semibold">ID</th>
-                        <th className="pb-3 font-semibold">Recipient</th>
-                        <th className="pb-3 font-semibold">Amount</th>
-                        <th className="pb-3 font-semibold">Status</th>
-                        <th className="pb-3 font-semibold text-right">Action</th>
+                        <th className="pb-2 font-semibold">ID</th>
+                        <th className="pb-2 font-semibold">Recipient</th>
+                        <th className="pb-2 font-semibold">Amount</th>
+                        <th className="pb-2 font-semibold">Status</th>
+                        <th className="pb-2 font-semibold text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
                       {history.map((t) => (
                         <tr key={t.id} className="hover:bg-white/[0.02] transition-colors group">
-                          <td className="py-3.5 text-xs font-medium text-slate-400">#{t.id}</td>
-                          <td className="py-3.5 font-mono text-xs text-slate-300" title={t.recipient}>
+                          <td className="py-2.5 text-xs font-medium text-slate-400">#{t.id}</td>
+                          <td className="py-2.5 font-mono text-xs text-slate-300" title={t.recipient}>
                             {t.recipient.slice(0,6)}...{t.recipient.slice(-4)}
                           </td>
-                          <td className="py-3.5 text-xs font-semibold text-white">{t.amount} XLM</td>
-                          <td className="py-3.5">
+                          <td className="py-2.5 text-xs font-semibold text-white">{t.amount} XLM</td>
+                          <td className="py-2.5">
                             <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                               t.status === 'Pending' 
                                 ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' 
@@ -268,11 +255,11 @@ function App() {
                               {t.status}
                             </span>
                           </td>
-                          <td className="py-3.5 text-right">
+                          <td className="py-2.5 text-right">
                             {t.status === 'Pending' && t.recipient === address ? (
                               <button 
                                 onClick={() => handleRelease(t.id)}
-                                className="text-[11px] font-bold bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 px-3.5 py-1.5 rounded-lg transition-all border border-cyan-500/20 active:scale-95"
+                                className="text-[11px] font-bold bg-cyan-500/10 hover:bg-cyan-500/20 text-[#00B4D8] px-3 py-1 rounded-lg transition-all border border-[#00B4D8]/20 active:scale-95"
                               >
                                 Confirm Payout
                               </button>
@@ -293,15 +280,15 @@ function App() {
           
           {/* Transfer Status Tracker visualizer (using the latest active transfer if any) */}
           {history.length > 0 && (
-            <div className="premium-card padding-asymmetric-md">
-              <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-6">Latest Transfer Status</h2>
+            <div className="glass-card p-[24px] relative overflow-hidden">
+              <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-4">Latest Transfer Status</h2>
               {(() => {
                 const latest = history[history.length - 1];
                 const steps = ['Sent', 'Compliance Check', 'Escrow Locked', 'Released'];
-                const currentStep = latest.status === 'Pending' ? 2 : 3; // 0-indexed, 2 is locked, 3 is released
+                const currentStep = latest.status === 'Pending' ? 2 : 3;
 
                 return (
-                  <div className="relative py-4">
+                  <div className="relative py-2">
                     <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2 rounded-full"></div>
                     <div 
                       className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 -translate-y-1/2 rounded-full transition-all duration-1000"
@@ -337,23 +324,23 @@ function App() {
           )}
 
           {/* Live Activity Feed */}
-          <div className="premium-card height-feed padding-asymmetric-md relative overflow-hidden mt-8 flex flex-col justify-between">
-            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-6 flex items-center justify-between">
+          <div className="glass-card h-[220px] p-[24px] relative overflow-hidden flex flex-col justify-between">
+            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase mb-4 flex items-center justify-between">
               <span className="flex items-center gap-2">
                 <Activity className="text-cyan-400" size={16} /> Live Activity Feed
               </span>
-              <span className="text-[10px] font-bold tracking-widest text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">TESTNET</span>
+              <span className="text-[11px] px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded-full ml-2">Testnet</span>
             </h2>
             
-            <div className="flex-grow overflow-y-auto pr-1 max-h-[140px]">
+            <div className="flex-grow overflow-y-auto pr-1 max-h-[120px]">
               {events.length === 0 ? (
                 <div className="text-center py-6 text-slate-500 text-xs border border-dashed border-white/5 rounded-xl">
                   No recent events found on Testnet.
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {events.map((ev, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-3.5 rounded-xl border border-white/5 transition-all">
+                    <div key={i} className="flex items-center gap-3 bg-white/[0.01] hover:bg-white/[0.03] p-2.5 rounded-xl border border-white/5 transition-all">
                       <div className="bg-cyan-500/10 text-cyan-400 p-2 rounded-lg">
                         <Activity size={14} className="animate-pulse" />
                       </div>
