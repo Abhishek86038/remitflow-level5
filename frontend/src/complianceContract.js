@@ -1,9 +1,9 @@
-import { Contract, SorobanRpc, TransactionBuilder, Networks, nativeToScVal, scValToNative } from '@stellar/stellar-sdk';
+import { Contract, rpc, TransactionBuilder, Networks, nativeToScVal, scValToNative } from '@stellar/stellar-sdk';
 import { signTx } from './wallet';
 
 // These should be updated after real deployment
 export const COMPLIANCE_CONTRACT_ID = 'CALNW7TNPWLDZKMWZDTVTDG4XEOOPFNCRVCNG5X64SVKZSGH462C3JIR'; // Deployed Testnet Contract ID
-const rpcServer = new SorobanRpc.Server('https://soroban-testnet.stellar.org');
+const rpcServer = new rpc.Server('https://soroban-testnet.stellar.org');
 const networkPassphrase = Networks.TESTNET;
 
 export const checkCompliance = async (senderAddress, amount) => {
@@ -20,7 +20,7 @@ export const checkCompliance = async (senderAddress, amount) => {
             .build();
             
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) {
+        if (rpc.Api.isSimulationError(simulated)) {
             return false;
         }
         
@@ -44,7 +44,7 @@ export const getLimit = async (senderAddress) => {
             .build();
             
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) {
+        if (rpc.Api.isSimulationError(simulated)) {
             return 0;
         }
         

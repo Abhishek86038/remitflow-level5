@@ -1,7 +1,7 @@
-import { SorobanRpc } from '@stellar/stellar-sdk';
+import { rpc } from '@stellar/stellar-sdk';
 import { ESCROW_CONTRACT_ID } from './escrowContract';
 
-const rpcServer = new SorobanRpc.Server('https://soroban-testnet.stellar.org');
+const rpcServer = new rpc.Server('https://soroban-testnet.stellar.org');
 
 export const getRecentEvents = async () => {
     try {

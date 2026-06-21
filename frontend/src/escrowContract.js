@@ -1,9 +1,9 @@
-import { Contract, SorobanRpc, TransactionBuilder, Networks, nativeToScVal, scValToNative } from '@stellar/stellar-sdk';
+import { Contract, rpc, TransactionBuilder, Networks, nativeToScVal, scValToNative } from '@stellar/stellar-sdk';
 import { signTx } from './wallet';
 
 // These should be updated after real deployment
 export const ESCROW_CONTRACT_ID = 'CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U'; // Deployed Testnet Contract ID
-const rpcServer = new SorobanRpc.Server('https://soroban-testnet.stellar.org');
+const rpcServer = new rpc.Server('https://soroban-testnet.stellar.org');
 const networkPassphrase = Networks.TESTNET;
 
 export const deposit = async (senderAddress, recipientAddress, amount) => {
@@ -22,11 +22,11 @@ export const deposit = async (senderAddress, recipientAddress, amount) => {
             
         // First simulate to check compliance
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) {
+        if (rpc.Api.isSimulationError(simulated)) {
             throw new Error(simulated.error);
         }
 
-        const assembledTx = SorobanRpc.assembleTransaction(tx, networkPassphrase, simulated).build();
+        const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
         const signedTxXdr = await signTx(assembledTx.toXDR(), senderAddress);
         
         const response = await rpcServer.sendTransaction(TransactionBuilder.fromXDR(signedTxXdr, networkPassphrase));
@@ -74,11 +74,11 @@ export const releaseFunds = async (recipientAddress, transferId) => {
             .build();
             
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) {
+        if (rpc.Api.isSimulationError(simulated)) {
             throw new Error(simulated.error);
         }
 
-        const assembledTx = SorobanRpc.assembleTransaction(tx, networkPassphrase, simulated).build();
+        const assembledTx = rpc.assembleTransaction(tx, networkPassphrase, simulated).build();
         const signedTxXdr = await signTx(assembledTx.toXDR(), recipientAddress);
         
         const response = await rpcServer.sendTransaction(TransactionBuilder.fromXDR(signedTxXdr, networkPassphrase));
@@ -101,7 +101,7 @@ export const getTransferStatus = async (senderAddress, transferId) => {
             .build();
             
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) return null;
+        if (rpc.Api.isSimulationError(simulated)) return null;
         
         return scValToNative(simulated.result.retval).toString();
     } catch (e) {
@@ -122,7 +122,7 @@ export const getTransferHistory = async (address) => {
             .build();
             
         const simulated = await rpcServer.simulateTransaction(tx);
-        if (SorobanRpc.Api.isSimulationError(simulated)) return [];
+        if (rpc.Api.isSimulationError(simulated)) return [];
         
         const history = scValToNative(simulated.result.retval);
         return history.map(item => ({
