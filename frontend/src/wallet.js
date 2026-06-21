@@ -1,9 +1,10 @@
-import { StellarWalletsKit, WalletNetwork, allowAllModules } from '@creit.tech/stellar-wallets-kit';
+import { StellarWalletsKit, Networks } from '@creit.tech/stellar-wallets-kit';
+import { FreighterModule, FREIGHTER_ID } from '@creit.tech/stellar-wallets-kit/modules/freighter';
 
 export const kit = new StellarWalletsKit({
-    network: WalletNetwork.TESTNET,
-    selectedWalletId: 'freighter',
-    modules: allowAllModules(),
+    network: Networks.TESTNET,
+    selectedWalletId: FREIGHTER_ID,
+    modules: [new FreighterModule()],
 });
 
 export const connectWallet = async () => {
@@ -22,7 +23,7 @@ export const connectWallet = async () => {
 
 export const signTx = async (xdr, publicKey) => {
     try {
-        const result = await kit.signTx({ xdr, publicKeys: [publicKey], network: WalletNetwork.TESTNET });
+        const result = await kit.signTx({ xdr, publicKeys: [publicKey], network: Networks.TESTNET });
         return result.signedTxXdr;
     } catch (e) {
         throw new Error('Failed to sign transaction: ' + e.message);
