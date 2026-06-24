@@ -81,6 +81,9 @@ function App() {
     e.preventDefault();
     if (!address) return toast.error('Please connect your wallet first');
     if (!recipient || !amount) return toast.error('Please fill all fields');
+    if (recipient === address) return toast.error('Cannot send to your own address');
+    if (!recipient.startsWith('G') || recipient.length !== 56) return toast.error('Invalid Stellar recipient address format');
+    if (Number(amount) <= 0) return toast.error('Amount must be greater than 0');
     if (Number(amount) > limit) return toast.error(`Amount exceeds compliance limit of ${limit} XLM`);
 
     const startTime = Date.now();
@@ -187,6 +190,34 @@ function App() {
     }
   };
 
+  const handleExportCSV = () => {
+    if (history.length === 0) return toast.error('No history to export');
+    const headers = ['ID', 'Recipient', 'Amount (XLM)', 'Status'];
+    const rows = history.map(t => `${t.id},${t.recipient},${t.amount},${t.status}`);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `RemitFlow_History_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success('History exported successfully!');
+    trackEvent('export_history_csv', { count: history.length });
+  };
+
+  const handleDownloadReceipt = (t) => {
+    const receiptText = `REMITFLOW TRANSACTION RECEIPT\n---------------------------\nDate: ${new Date().toLocaleString()}\nTransaction ID: ${t.id}\nSender: ${address}\nRecipient: ${t.recipient}\nAmount: ${t.amount} XLM\nStatus: ${t.status}\n\nThank you for using RemitFlow on Stellar Testnet!`;
+    const blob = new Blob([receiptText], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = `receipt_${t.id}.txt`;
+    link.href = url;
+    link.click();
+    toast.success('Receipt downloaded!');
+    trackEvent('download_receipt', { transferId: t.id });
+  };
+
   return (
     <div className="min-h-screen text-white font-sans relative z-10 selection:bg-cyan-500/30 selection:text-cyan-200">
       <ToastContainer theme="dark" toastClassName="glass-card !border-white/10 !bg-slate-950/80 !backdrop-blur-md" />
@@ -285,7 +316,10 @@ function App() {
                 className="w-full h-[48px] rounded-[16px] bg-gradient-to-r from-[#00B4D8] to-[#0077FF] font-semibold text-white hover:shadow-lg hover:shadow-cyan-500/30 transition-all hover:-translate-y-[2px] disabled:opacity-50 flex justify-center items-center gap-2 cursor-pointer"
               >
                 {loading ? (
-                  <span className="animate-pulse">Processing...</span>
+                  <>
+                    <Activity className="animate-spin text-cyan-200" size={16} />
+                    <span className="animate-pulse">Processing...</span>
+                  </>
                 ) : (
                   <>
                     Send Funds →
@@ -303,9 +337,19 @@ function App() {
           
           {/* Transfer History Card */}
           <div className="glass-card h-[380px] p-[28px] relative overflow-hidden flex flex-col">
-            <h2 className="text-lg font-bold tracking-tight text-white mb-4 flex items-center gap-2">
-              <History className="text-[#00B4D8]" size={18} /> Transfer History
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                <History className="text-[#00B4D8]" size={18} /> Transfer History
+              </h2>
+              {history.length > 0 && (
+                <button 
+                  onClick={handleExportCSV}
+                  className="text-[11px] font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 transition-all flex items-center gap-2"
+                >
+                  Export CSV
+                </button>
+              )}
+            </div>
             
             <div className="flex-grow overflow-y-auto pr-1">
               {history.length === 0 ? (
@@ -354,7 +398,10 @@ function App() {
                             ) : t.status === 'Pending' ? (
                                <span className="text-[11px] font-medium text-slate-500 italic">Waiting for Recipient</span>
                             ) : (
-                              <span className="text-emerald-400 inline-flex items-center justify-end"><CheckCircle size={16} /></span>
+                              <div className="flex justify-end items-center gap-2">
+                                <span className="text-emerald-400 inline-flex items-center"><CheckCircle size={16} /></span>
+                                <button onClick={() => handleDownloadReceipt(t)} className="text-[10px] uppercase font-bold text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-2 py-1 rounded border border-white/5 transition-all">Receipt</button>
+                              </div>
                             )}
                           </td>
                         </tr>
