@@ -23,7 +23,7 @@ RemitFlow solves these problems using:
 - **Instant Finality & Low Fees**: Leveraging the Stellar network to settle payments in seconds for fractions of a cent.
 - **On-chain Escrows**: Ensuring funds are locked securely and can only be released upon recipient payout confirmation.
 - **Automated Compliance Check**: Inter-contract calls verify compliance parameters before locking funds.
-- **Live Status Tracker**: A dynamic frontend interface showing transaction status from "Sent" to "Released".
+- **Live Status Tracker**: A dynamic frontend interface showing transaction status from "Sent" to "Released" via a premium stepper.
 
 ### Key Features
 - **Wallet Connection**: Dynamic authentication via Stellar Wallets Kit (Freighter, etc.).

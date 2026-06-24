@@ -1,0 +1,79 @@
+{
+  "project": "RemitFlow",
+  "network": "Stellar Testnet",
+  "smart_contract_escrow": "CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U",
+  "smart_contract_compliance": "CALNW7TNPWLDZKMWZDTVTDG4XEOOPFNCRVCNG5X64SVKZSGH462C3JIR",
+  "total_interactions": 10,
+  "interactions": [
+    {
+      "user_wallet": "GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "25.0",
+      "transaction_hash": "4b687b7aa9c64aa763adc2849ee837b59f4f401744f49687ddc5fff239ece296"
+    },
+    {
+      "user_wallet": "GB2X2Z5F24FJW5UXE745R2F3T2W6D7GBLQ5W4E4E6S27L6UXRMXL7F44",
+      "role": "Recipient",
+      "action": "release_funds",
+      "amount_xlm": "25.0",
+      "transaction_hash": "tx_hash_example_release_1"
+    },
+    {
+      "user_wallet": "GCO527YCC6DNDK3K6FN654WXAINDGNB35FUFAN3LURDENIIBD7ZFAJN6",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "1.0",
+      "transaction_hash": "10dd67af856167052c5233444fbc66408347b6c9e26b1f1964e78e3f7d9bf16d"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_4"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_5"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_6"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_7"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_8"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_9"
+    },
+    {
+      "user_wallet": "G...",
+      "role": "Sender/Recipient",
+      "action": "deposit/release",
+      "amount_xlm": "0.0",
+      "transaction_hash": "tx_hash_here_10"
+    }
+  ]
+}
