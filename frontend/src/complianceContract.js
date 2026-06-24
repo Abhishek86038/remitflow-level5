@@ -48,7 +48,7 @@ export const getLimit = async (senderAddress) => {
             return 0;
         }
         
-        return Number(scValToNative(simulated.result.retval));
+        return Number(scValToNative(simulated.result.retval)) / 10000000;
     } catch (e) {
         console.error("Error fetching limit", e);
         return 0;

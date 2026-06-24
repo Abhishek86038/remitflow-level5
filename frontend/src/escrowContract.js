@@ -11,11 +11,12 @@ export const deposit = async (senderAddress, recipientAddress, amount) => {
         const contract = new Contract(ESCROW_CONTRACT_ID);
         const txBuilder = await buildTransaction(senderAddress);
         
+        const amountStroops = BigInt(Math.round(Number(amount) * 10000000));
         const tx = txBuilder
             .addOperation(contract.call('deposit',
                 nativeToScVal(senderAddress, { type: 'address' }),
                 nativeToScVal(recipientAddress, { type: 'address' }),
-                nativeToScVal(amount, { type: 'i128' })
+                nativeToScVal(amountStroops.toString(), { type: 'i128' })
             ))
             .setTimeout(30)
             .build();
@@ -149,7 +150,7 @@ export const getTransferHistory = async (address) => {
             id: Number(item.id),
             sender: item.sender.toString(),
             recipient: item.recipient.toString(),
-            amount: Number(item.amount),
+            amount: Number(item.amount) / 10000000,
             status: item.status.toString() === '0' ? 'Pending' : 'Released'
         }));
     } catch (e) {

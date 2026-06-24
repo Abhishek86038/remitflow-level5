@@ -8,7 +8,7 @@ async function run() {
     try {
         const senderAddress = 'GDXKETAZIUWTNK7NP5VKR2JVXWUQDTRVG46YQDUBLFCL24UTR5PVAEPL'; // admin
         const recipientAddress = 'GCHVOUEDXJRTXLUAZVBSFABIHUT636UAVL7ATZWWUBRO52RR7OP5CBI4';
-        const amount = '5';
+        const amount = '50000000';
 
         const contract = new Contract(ESCROW_CONTRACT_ID);
         const account = await rpcServer.getAccount(senderAddress);
