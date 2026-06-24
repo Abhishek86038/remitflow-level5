@@ -3,7 +3,7 @@
   "network": "Stellar Testnet",
   "smart_contract_escrow": "CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY",
   "smart_contract_compliance": "CALNW7TNPWLDZKMWZDTVTDG4XEOOPFNCRVCNG5X64SVKZSGH462C3JIR",
-  "total_interactions": 10,
+  "total_interactions": 12,
   "interactions": [
     {
       "user_wallet": "GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA",
@@ -27,53 +27,67 @@
       "transaction_hash": "10dd67af856167052c5233444fbc66408347b6c9e26b1f1964e78e3f7d9bf16d"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_4"
+      "user_wallet": "GCHVOUEDXJRTXLUAZVBSFABIHUT636UAVL7ATZWWUBRO52RR7OP5CBI4",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "10.0",
+      "transaction_hash": "cc36c9405672199405457c76aedd393d1db5730eb4b26ee4e417681d98801f9c"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_5"
+      "user_wallet": "GBKYSKQ7VFVFCAEKEXCOSLZC5RK3EPVDQMLIUQJ3HIUA4TKBOVC7ZQVW",
+      "role": "Recipient",
+      "action": "release_funds",
+      "amount_xlm": "10.0",
+      "transaction_hash": "1942b28f0a2a85be9eb6139701a744572f586b5f87087a02eade8839b02fbe6e"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_6"
+      "user_wallet": "GASTVZNEON3OSJ5R5YOELNWY7O622OYZ74XWOEQJOUAFPFPDBWEM45US",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "50.0",
+      "transaction_hash": "60fa6b72d7b8a4bc8c64c8afa63d6a24ce98a9c64060add27f3a927124902cf7"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_7"
+      "user_wallet": "GALXUJI5TIYMUNPJT6Y3FEOYDCXSN3TP5KLRC5VRENJUKUNU67MN67WV",
+      "role": "Recipient",
+      "action": "release_funds",
+      "amount_xlm": "50.0",
+      "transaction_hash": "28ef6780a1516f2345783b38f7fc5ac8854deedeab02763db48f416b73a16b18"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_8"
+      "user_wallet": "GCSDJAMZ4JZWAY4RSF5PJILNZG7AJUUKICEBMUE2HDP56BUW6NLBUB4I",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "15.0",
+      "transaction_hash": "52d2f27d5efaa541fd572c09272ba93aa518324a9375fe20d3ae23587867b812"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_9"
+      "user_wallet": "GDTA4AJE34CXM4BUTPLQVBJYGOM2JZGGJ5TWH5RC6QZVU5H2KIQA4RZJ",
+      "role": "Recipient",
+      "action": "release_funds",
+      "amount_xlm": "15.0",
+      "transaction_hash": "77168fdb713c1d30fa52e50da87314beae2aa7a4416ce6ed3b0ce3e4deb3ddb3"
     },
     {
-      "user_wallet": "G...",
-      "role": "Sender/Recipient",
-      "action": "deposit/release",
-      "amount_xlm": "0.0",
-      "transaction_hash": "tx_hash_here_10"
+      "user_wallet": "GA5WQTVIO6XJWFML7VIOUS3JRWO3EVNA7J7S24K4MCW4OE3HYEAH357Z",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "5.0",
+      "transaction_hash": "81ed05a5d64d871ebc179cf3716e74a2e16e797368ec63f4e47a173bd3528d86"
+    },
+    {
+      "user_wallet": "GCADSJWNBJD7MBH5RY5HCYJH2DKMXOYZVJLTGLEOKSDFE2ZJE3ZXG74P",
+      "role": "Recipient",
+      "action": "release_funds",
+      "amount_xlm": "5.0",
+      "transaction_hash": "2989ff7016101a62fb497da2a1a66fb7e0d837e9a22f54625d351333ddd848fb"
+    },
+    {
+      "user_wallet": "GBAKOBGSHZ5PORMNC5OKEGQQ7AVNCKBSYSFN436QNIO7MIEHCDDERZLH",
+      "role": "Sender",
+      "action": "deposit",
+      "amount_xlm": "2.0",
+      "transaction_hash": "acb706bd6321acad1c664e811d259e497aea8da025fd531d78b96970e516bc51"
     }
   ]
 }

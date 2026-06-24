@@ -173,13 +173,13 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 - Premium Stepper: ![Premium Stepper](docs/screenshots/stepper_live.png)
 
 ### Screenshots of Mobile Responsive Design
-- Mobile Layout: `docs/screenshots/mobile_responsive.png`
+- Mobile Layout: ![Mobile Layout](docs/screenshots/mobile_responsive.png)
 
 ### Screenshots of Analytics/Monitoring Setup
-- Console Logs / Event Telemetry: `docs/screenshots/analytics_console.png`
+- Console Logs / Event Telemetry: ![Console Logs](docs/screenshots/analytics_console.png)
 
 ### Demo Video Link
-- Live walkthrough video: `[Add Link Here]`
+- Live walkthrough video: https://youtu.be/HDG9Dxlza0Y
 
 ### Proof of 10+ Wallet Interactions
 - Logged Testnet transactions: `docs/proof_interactions.json`
