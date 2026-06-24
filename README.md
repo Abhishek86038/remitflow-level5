@@ -182,7 +182,7 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 - Live walkthrough video: https://youtu.be/HDG9Dxlza0Y
 
 ### Proof of 10+ Wallet Interactions
-- Logged Testnet transactions: `docs/proof_interactions.json`
+- Logged Testnet transactions: [proof_interactions.json](./docs/proof_interactions.json)
 
 ### User Feedback Summary
 - Beta Testers reported: *"Extremely premium interface. The glassmorphism and real-time transaction stepper make it feel much more secure than traditional web3 wallets."*
