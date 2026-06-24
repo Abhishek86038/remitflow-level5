@@ -169,8 +169,8 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 
 ### Screenshots of Product UI
 *(Insert your screenshot paths here)*
-- Main Dashboard: `docs/screenshots/dashboard_main.png`
-- Premium Stepper: `docs/screenshots/stepper_live.png`
+- Main Dashboard: ![Main Dashboard](docs/screenshots/dashboard_main.png)
+- Premium Stepper: ![Premium Stepper](docs/screenshots/stepper_live.png)
 
 ### Screenshots of Mobile Responsive Design
 - Mobile Layout: `docs/screenshots/mobile_responsive.png`

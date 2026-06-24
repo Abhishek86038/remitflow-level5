@@ -192,12 +192,12 @@ function App() {
       <ToastContainer theme="dark" toastClassName="glass-card !border-white/10 !bg-slate-950/80 !backdrop-blur-md" />
       
       {/* Navigation Header */}
-      <nav className="glassmorphism flex justify-between items-center py-5 px-8 sticky top-0 z-50 border-b border-white/5 bg-slate-950/20 backdrop-blur-xl">
+      <nav className="glassmorphism flex flex-col md:flex-row gap-4 justify-between items-center py-4 px-6 md:px-8 sticky top-0 z-50 border-b border-white/5 bg-slate-950/20 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <div className="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2 rounded-xl shadow-lg shadow-cyan-500/20">
             <Activity size={22} className="text-white animate-pulse" />
           </div>
-          <h1 className="text-[32px] font-bold select-none tracking-tight">
+          <h1 className="text-2xl md:text-[32px] font-bold select-none tracking-tight">
             <span className="font-[Inter] text-white">Remit</span>
             <span className="font-[Stellar_Display] rotate-[1.5deg] inline-block ml-1 text-cyan-400">Flow</span>
           </h1>
@@ -205,7 +205,7 @@ function App() {
         
         <div className="flex gap-4 items-center">
           {address ? (
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
               <span className="text-xs bg-white/5 px-4 py-2.5 rounded-full font-mono shadow-inner border border-white/5 flex items-center">
                 <span className="w-2 h-2 bg-green-400 rounded-full inline-block mr-2"></span>
                 {address.slice(0,6)}...{address.slice(-4)}
@@ -230,7 +230,7 @@ function App() {
       </nav>
 
       {/* Main Grid Content */}
-      <main className="grid grid-cols-3 gap-[29px] p-[46px] relative z-10">
+      <main className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-[29px] p-6 lg:p-[46px] relative z-10">
         
         {/* Left Column */}
         <div className="flex flex-col gap-[29px]">
@@ -299,7 +299,7 @@ function App() {
         </div>
 
         {/* Right Column - Span 2 */}
-        <div className="col-span-2 flex flex-col gap-[29px]">
+        <div className="col-span-1 lg:col-span-2 flex flex-col gap-[29px]">
           
           {/* Transfer History Card */}
           <div className="glass-card h-[380px] p-[28px] relative overflow-hidden flex flex-col">
