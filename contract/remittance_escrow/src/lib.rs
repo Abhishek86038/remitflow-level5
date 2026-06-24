@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Vec, symbol_short, String, Symbol, IntoVal};
+use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Vec, symbol_short, String, Symbol, IntoVal, token};
 
 #[contracttype]
 #[derive(Clone)]
@@ -22,6 +22,7 @@ pub struct Transfer {
 #[derive(Clone)]
 pub enum DataKey {
     ComplianceContract,
+    TokenContract,
     TransferCounter,
     TransferInfo(u64),      // Transfer details by ID
     UserTransfers(Address), // Vector of transfer IDs for a user
@@ -32,8 +33,9 @@ pub struct RemittanceEscrow;
 
 #[contractimpl]
 impl RemittanceEscrow {
-    pub fn init(env: Env, compliance_contract: Address) {
+    pub fn init(env: Env, compliance_contract: Address, token_contract: Address) {
         env.storage().instance().set(&DataKey::ComplianceContract, &compliance_contract);
+        env.storage().instance().set(&DataKey::TokenContract, &token_contract);
         env.storage().instance().set(&DataKey::TransferCounter, &0u64);
     }
 
@@ -53,6 +55,11 @@ impl RemittanceEscrow {
             env.events().publish((symbol_short!("ComplRej"), sender.clone()), amount);
             panic!("Exceeds compliance limit");
         }
+
+        // Lock funds into the contract
+        let token_contract: Address = env.storage().instance().get(&DataKey::TokenContract).unwrap();
+        let token_client = token::Client::new(&env, &token_contract);
+        token_client.transfer(&sender, &env.current_contract_address(), &amount);
 
         let mut counter: u64 = env.storage().instance().get(&DataKey::TransferCounter).unwrap();
         counter += 1;
@@ -96,6 +103,11 @@ impl RemittanceEscrow {
                 transfer.status = TransferStatus::Released;
                 env.storage().persistent().set(&DataKey::TransferInfo(transfer_id), &transfer);
                 
+                // Release funds from the contract to recipient
+                let token_contract: Address = env.storage().instance().get(&DataKey::TokenContract).unwrap();
+                let token_client = token::Client::new(&env, &token_contract);
+                token_client.transfer(&env.current_contract_address(), &recipient, &transfer.amount);
+
                 env.events().publish(
                     (symbol_short!("Release"), recipient),
                     transfer_id
@@ -133,30 +145,28 @@ impl RemittanceEscrow {
 #[cfg(test)]
 mod test {
     use super::*;
-    use soroban_sdk::{testutils::{Address as _, MockAuth, MockAuthInvoke}, Address, Env, IntoVal};
+    use soroban_sdk::{testutils::{Address as _, MockAuth, MockAuthInvoke}, Address, Env};
     
-    // We need to define the ComplianceCheck interface for the test
     mod compliance_contract {
         soroban_sdk::contractimport!(
-            file = "../../contract/compliance_check/target/wasm32-unknown-unknown/release/compliance_check.wasm"
+            file = "../target/wasm32v1-none/release/compliance_check.wasm"
         );
+    }
+
+    #[contract]
+    pub struct MockComplianceContract;
+
+    #[contractimpl]
+    impl MockComplianceContract {
+        pub fn check_compliance(_env: Env, _sender: Address, amount: i128) -> bool {
+            amount <= 1000
+        }
     }
 
     #[test]
     fn test_deposit_locks_funds() {
         let env = Env::default();
-        
-        // Because inter-contract calls in tests need the Wasm or a registered implementation.
-        // We'll register a mock compliance contract for the test
-        struct MockCompliance;
-        #[contract]
-        struct MockComplianceContract;
-        #[contractimpl]
-        impl MockComplianceContract {
-            pub fn check_compliance(_env: Env, _sender: Address, amount: i128) -> bool {
-                amount <= 1000
-            }
-        }
+        env.mock_all_auths();
         
         let compliance_id = env.register_contract(None, MockComplianceContract);
         let escrow_id = env.register_contract(None, RemittanceEscrow);
@@ -165,9 +175,12 @@ mod test {
         let sender = Address::generate(&env);
         let recipient = Address::generate(&env);
         
-        env.mock_all_auths();
+        let token_admin = Address::generate(&env);
+        let token_id = env.register_stellar_asset_contract(token_admin.clone());
+        let token_admin_client = token::StellarAssetClient::new(&env, &token_id);
+        token_admin_client.mint(&sender, &1000);
         
-        client.init(&compliance_id);
+        client.init(&compliance_id, &token_id);
         client.deposit(&sender, &recipient, &500); // 500 <= 1000, should pass
         
         let status = client.get_transfer_status(&1);
@@ -182,16 +195,7 @@ mod test {
     #[should_panic(expected = "Exceeds compliance limit")]
     fn test_inter_contract_compliance_call_fail() {
         let env = Env::default();
-        
-        struct MockCompliance;
-        #[contract]
-        struct MockComplianceContract;
-        #[contractimpl]
-        impl MockComplianceContract {
-            pub fn check_compliance(_env: Env, _sender: Address, amount: i128) -> bool {
-                amount <= 1000
-            }
-        }
+        env.mock_all_auths();
         
         let compliance_id = env.register_contract(None, MockComplianceContract);
         let escrow_id = env.register_contract(None, RemittanceEscrow);
@@ -200,25 +204,19 @@ mod test {
         let sender = Address::generate(&env);
         let recipient = Address::generate(&env);
         
-        env.mock_all_auths();
+        let token_admin = Address::generate(&env);
+        let token_id = env.register_stellar_asset_contract(token_admin.clone());
+        let token_admin_client = token::StellarAssetClient::new(&env, &token_id);
+        token_admin_client.mint(&sender, &2000);
         
-        client.init(&compliance_id);
+        client.init(&compliance_id, &token_id);
         client.deposit(&sender, &recipient, &1500); // Should fail
     }
 
     #[test]
     fn test_release_funds() {
         let env = Env::default();
-        
-        struct MockCompliance;
-        #[contract]
-        struct MockComplianceContract;
-        #[contractimpl]
-        impl MockComplianceContract {
-            pub fn check_compliance(_env: Env, _sender: Address, amount: i128) -> bool {
-                amount <= 1000
-            }
-        }
+        env.mock_all_auths();
         
         let compliance_id = env.register_contract(None, MockComplianceContract);
         let escrow_id = env.register_contract(None, RemittanceEscrow);
@@ -227,9 +225,12 @@ mod test {
         let sender = Address::generate(&env);
         let recipient = Address::generate(&env);
         
-        env.mock_all_auths();
+        let token_admin = Address::generate(&env);
+        let token_id = env.register_stellar_asset_contract(token_admin.clone());
+        let token_admin_client = token::StellarAssetClient::new(&env, &token_id);
+        token_admin_client.mint(&sender, &1000);
         
-        client.init(&compliance_id);
+        client.init(&compliance_id, &token_id);
         client.deposit(&sender, &recipient, &500);
         
         client.release_funds(&recipient, &1);

@@ -2,7 +2,7 @@ import { Contract, rpc, TransactionBuilder, Networks, nativeToScVal, scValToNati
 import { signTx } from './wallet';
 
 // These should be updated after real deployment
-export const ESCROW_CONTRACT_ID = 'CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U'; // Deployed Testnet Contract ID
+export const ESCROW_CONTRACT_ID = 'CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY'; // Deployed Testnet Contract ID
 const rpcServer = new rpc.Server('https://soroban-testnet.stellar.org');
 const networkPassphrase = Networks.TESTNET;
 

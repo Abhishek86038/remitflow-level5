@@ -125,8 +125,8 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 ## 5. Deployment Details
 
 - **ComplianceCheck Contract Address**: `CALNW7TNPWLDZKMWZDTVTDG4XEOOPFNCRVCNG5X64SVKZSGH462C3JIR`
-- **RemittanceEscrow Contract Address**: `CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U`
-- **Example Initialization Tx (Testnet)**: `https://stellar.expert/explorer/testnet/tx/1d15015d574609cc0d28540d8aad924e1b8166f96a2e8b9c392ca8fc84870e22`
+- **RemittanceEscrow Contract Address**: `CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY`
+- **Example Initialization Tx (Testnet)**: `https://stellar.expert/explorer/testnet/tx/5100ad25fcba0a843a31b11e8de822195c7067c1d74a3409c94f3af3f650a0ac`
 - **Stellar Network**: Testnet
 - **Live Demo Link**: `https://remitflow.vercel.app` *(Or host on your own provider)*
 

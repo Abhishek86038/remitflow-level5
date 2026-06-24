@@ -1,7 +1,7 @@
 {
   "project": "RemitFlow",
   "network": "Stellar Testnet",
-  "smart_contract_escrow": "CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U",
+  "smart_contract_escrow": "CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY",
   "smart_contract_compliance": "CALNW7TNPWLDZKMWZDTVTDG4XEOOPFNCRVCNG5X64SVKZSGH462C3JIR",
   "total_interactions": 10,
   "interactions": [

@@ -1,6 +1,6 @@
 const { Contract, rpc, TransactionBuilder, Networks, nativeToScVal } = require('@stellar/stellar-sdk');
 
-const ESCROW_CONTRACT_ID = 'CDJI52VFGP3EH7UKE6FMO76VHFRRGAPZ23HVLUNFSZX6DUJJB7R2CK4U';
+const ESCROW_CONTRACT_ID = 'CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY';
 const rpcServer = new rpc.Server('https://soroban-testnet.stellar.org');
 const networkPassphrase = Networks.TESTNET;
 
