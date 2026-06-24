@@ -110,7 +110,7 @@ export const releaseFunds = async (recipientAddress, transferId) => {
 export const getTransferStatus = async (senderAddress, transferId) => {
     try {
         const contract = new Contract(ESCROW_CONTRACT_ID);
-        const txBuilder = await buildTransaction(senderAddress || 'GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA');
+        const txBuilder = await buildTransaction(senderAddress || 'GDXKETAZIUWTNK7NP5VKR2JVXWUQDTRVG46YQDUBLFCL24UTR5PVAEPL');
         
         const tx = txBuilder
             .addOperation(contract.call('get_transfer_status',
@@ -129,9 +129,10 @@ export const getTransferStatus = async (senderAddress, transferId) => {
 };
 
 export const getTransferHistory = async (address) => {
+    if (!address) return [];
     try {
         const contract = new Contract(ESCROW_CONTRACT_ID);
-        const txBuilder = await buildTransaction(address || 'GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA');
+        const txBuilder = await buildTransaction(address);
         
         const tx = txBuilder
             .addOperation(contract.call('get_transfer_history',

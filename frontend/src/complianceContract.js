@@ -36,7 +36,7 @@ export const getLimit = async (senderAddress) => {
     try {
         const contract = new Contract(COMPLIANCE_CONTRACT_ID);
         // Using any address to simulate the read operation
-        const txBuilder = await buildTransaction(senderAddress || 'GA7QYNF7SOWQ3GLR2BGMZEHXAVIRZA4KVWLTJJFC7MGXUA74P7UJUWDA');
+        const txBuilder = await buildTransaction(senderAddress || 'GDXKETAZIUWTNK7NP5VKR2JVXWUQDTRVG46YQDUBLFCL24UTR5PVAEPL');
         
         const tx = txBuilder
             .addOperation(contract.call('get_limit'))
