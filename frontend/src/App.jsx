@@ -128,6 +128,10 @@ function App() {
         setAmount('');
         setRecipient('');
         loadData();
+
+        setTimeout(() => {
+          setActiveTracker(null);
+        }, 5000);
       }
     } catch (e) {
       setActiveTracker(null);
@@ -170,8 +174,13 @@ function App() {
         trackEvent('release_success', { recipient: address, transferId, hash: res.hash });
         logMetric('release_execution_time', Date.now() - startTime);
         loadData();
+
+        setTimeout(() => {
+          setActiveTracker(null);
+        }, 5000);
       }
     } catch (e) {
+      setActiveTracker(null);
       trackEvent('release_failed', { recipient: address, transferId, error: e.message });
       logException(e, { action: 'release', recipient: address, transferId });
       toast.error(e.message || 'Release failed');
