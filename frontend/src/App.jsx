@@ -461,17 +461,52 @@ function App() {
         {/* Left Column */}
         <div className="flex flex-col gap-[29px]">
           
-          {/* Compliance Limit Card */}
-          <div className="glass-card h-[180px] p-[24px] flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full -z-10 group-hover:bg-cyan-500/10 transition-all duration-700"></div>
-            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase flex items-center gap-2">
-              <ShieldCheck style={themeStyles.textGlow} size={16} /> Compliance Check
+          {/* Compliance & Limit Stats Card */}
+          <div className="glass-card p-[24px] flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 rounded-bl-full -z-10 group-hover:opacity-80 transition-all duration-700" style={{ backgroundColor: `${themeColors[theme].glow}08` }}></div>
+            <h2 className="text-sm font-bold tracking-wider text-slate-400 uppercase flex items-center gap-2 mb-4">
+              <ShieldCheck style={themeStyles.textGlow} size={16} /> Compliance & Limits
             </h2>
-            <div>
-              <p className="text-slate-500 text-xs font-medium uppercase tracking-widest mb-1">Maximum Limit</p>
-              <p className="text-[52px] font-bold tracking-tight leading-none">
-                {limit} <span className="text-[18px] uppercase tracking-[2px] font-semibold" style={themeStyles.textGlow}>XLM</span>
-              </p>
+            
+            <div className="space-y-4">
+              <div>
+                <p className="text-slate-500 text-[10px] font-semibold uppercase tracking-widest mb-1">Send Limit Quota</p>
+                <div className="flex justify-between items-baseline">
+                  <p className="text-3xl font-extrabold tracking-tight">
+                    {totalVolume.toFixed(2)} <span className="text-xs text-slate-400 font-normal">/ {limit} XLM</span>
+                  </p>
+                  <span className="text-xs font-bold font-mono" style={themeStyles.textGlow}>
+                    {limit > 0 ? ((totalVolume / limit) * 100).toFixed(1) : 0}%
+                  </span>
+                </div>
+                {/* Glowing Progress Bar */}
+                <div className="w-full bg-white/5 h-2 rounded-full mt-2 overflow-hidden border border-white/5">
+                  <div 
+                    className="h-full rounded-full transition-all duration-500" 
+                    style={{ 
+                      width: `${limit > 0 ? Math.min((totalVolume / limit) * 100, 100) : 0}%`,
+                      background: `linear-gradient(90deg, var(--theme-neon) 0%, var(--theme-glow) 100%)`,
+                      boxShadow: `0 0 8px var(--theme-glow)`
+                    }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Grid of Micro KPI Stats */}
+              <div className="grid grid-cols-3 gap-2.5 pt-3 border-t border-white/5">
+                <div className="text-center">
+                  <p className="text-[8px] uppercase tracking-wider text-slate-500 font-semibold">Total Sent</p>
+                  <p className="text-xs font-bold text-white mt-0.5">{totalVolume.toFixed(1)} XLM</p>
+                </div>
+                <div className="text-center border-x border-white/5">
+                  <p className="text-[8px] uppercase tracking-wider text-slate-500 font-semibold">Success</p>
+                  <p className="text-xs font-bold text-emerald-400 mt-0.5">{successRate}%</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-[8px] uppercase tracking-wider text-slate-500 font-semibold">Active</p>
+                  <p className="text-xs font-bold text-amber-400 mt-0.5">{activeEscrows}</p>
+                </div>
+              </div>
             </div>
           </div>
 
