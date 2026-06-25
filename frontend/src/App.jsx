@@ -290,6 +290,21 @@ function App() {
     trackEvent('download_receipt', { transferId: t.id });
   };
 
+  // Derived dashboard metrics & history filtering
+  const filteredHistory = history.filter(t => {
+    const matchesSearch = (t.id || '').toString().toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          (t.recipient || '').toLowerCase().includes(searchQuery.toLowerCase());
+    if (statusFilter === 'All') return matchesSearch;
+    return matchesSearch && (t.status || '').toLowerCase() === statusFilter.toLowerCase();
+  });
+
+  const totalVolume = history.reduce((acc, val) => acc + Number(val.amount || 0), 0);
+
+  const successRate = history.length > 0 
+    ? Math.round((history.filter(t => t.status === 'Released').length / history.length) * 100) 
+    : 100;
+
+  const activeEscrows = history.filter(t => t.status === 'Pending').length;
 
   return (
     <div 
