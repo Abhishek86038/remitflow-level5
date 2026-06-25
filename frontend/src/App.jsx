@@ -165,11 +165,36 @@ function App() {
       setHistory([]);
       setLimit(0);
       setActiveTracker(null);
-      toast.info('Wallet disconnected');
+      toast.info('Wallet disconnected successfully');
       trackEvent('wallet_disconnected', { address: prevAddress });
     } catch (e) {
       console.error(e);
       logException(e, { action: 'wallet_disconnect' });
+    }
+  };
+
+  const handleClearSession = () => {
+    try {
+      // 1. Clear LocalStorage keys
+      localStorage.removeItem('remitflow_contacts');
+      localStorage.removeItem('remitflow_tx_nicknames');
+      localStorage.removeItem('remitflow_analytics_events');
+      
+      // 2. Reset React states
+      setContacts([]);
+      setTxNicknames({});
+      setLogs([]);
+      setHistory([]);
+      setLimit(0);
+      setActiveTracker(null);
+      setAddress('');
+      
+      // 3. Trigger Toast notification & Telemetry
+      toast.success('Session cleared: Cache reset & wallet disconnected successfully!');
+      trackEvent('session_cleared_reset', { timestamp: Date.now() });
+    } catch (e) {
+      console.error(e);
+      toast.error('Failed to clear session data');
     }
   };
 
@@ -427,6 +452,16 @@ function App() {
             <Terminal size={14} />
             <span className="hidden sm:inline">Dev Mode</span>
             <span className={`w-1.5 h-1.5 rounded-full ${devMode ? 'bg-amber-400 animate-ping' : 'bg-slate-600'}`}></span>
+          </button>
+
+          {/* Clear Session / Cache Reset Button */}
+          <button
+            onClick={handleClearSession}
+            className="px-3 h-[42px] rounded-[14px] border border-white/10 bg-white/5 text-slate-400 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/30 transition-all flex items-center gap-2 text-xs font-semibold cursor-pointer"
+            title="Clear all session cache & disconnect wallet"
+          >
+            <Trash2 size={14} />
+            <span className="hidden sm:inline">Clear Session</span>
           </button>
 
           {address ? (
