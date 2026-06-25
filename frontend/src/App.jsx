@@ -306,6 +306,12 @@ function App() {
 
   const activeEscrows = history.filter(t => t.status === 'Pending').length;
 
+  const getRecipientDisplay = (addr) => {
+    if (!addr) return '';
+    const contact = contacts.find(c => c.address === addr);
+    return contact ? `${contact.name} (${addr.slice(0, 4)}...${addr.slice(-4)})` : `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  };
+
   return (
     <div 
       className="min-h-screen text-white font-sans relative z-10 selection:bg-cyan-500/30 selection:text-cyan-200"
@@ -475,6 +481,15 @@ function App() {
                     <UserPlus size={16} style={themeStyles.textGlow} />
                   </button>
                 </div>
+                {contacts.find(c => c.address === recipient) && (
+                  <div className="mt-1.5 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-lg flex items-center justify-between text-[11px] text-slate-300 animate-fadeIn" style={{ borderColor: `${themeColors[theme].glow}22`, backgroundColor: `${themeColors[theme].glow}0d` }}>
+                    <span className="flex items-center gap-1.5 font-medium text-white">
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: themeColors[theme].glow }}></span>
+                      Recipient Identified: <strong className="text-white">{contacts.find(c => c.address === recipient).name}</strong>
+                    </span>
+                    <span className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Saved Contact</span>
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Amount</label>
@@ -643,7 +658,7 @@ function App() {
                         <tr key={t.id} className="hover:bg-white/[0.02] transition-colors group">
                           <td className="py-2.5 text-xs font-medium text-slate-400">#{t.id}</td>
                           <td className="py-2.5 font-mono text-xs text-slate-300" title={t.recipient}>
-                            {t.recipient.slice(0,6)}...{t.recipient.slice(-4)}
+                            {getRecipientDisplay(t.recipient)}
                           </td>
                           <td className="py-2.5 text-xs font-semibold text-white">{t.amount} XLM</td>
                           <td className="py-2.5">
@@ -710,7 +725,7 @@ function App() {
                         style={{ color: themeColors[theme].glow }}
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" style={{ backgroundColor: themeColors[theme].glow }}></span>
-                        {activeObj.label} ({activeObj.amount} XLM to {activeObj.recipient.slice(0, 6)}...{activeObj.recipient.slice(-4)})
+                        {activeObj.label} ({activeObj.amount} XLM to {getRecipientDisplay(activeObj.recipient)})
                       </span>
                     </div>
                     
