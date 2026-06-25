@@ -32,10 +32,10 @@ function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('remitflow_theme') || 'cyan');
 
   const themeColors = {
-    cyan: { glow: '#00B4D8', neon: '#0077FF' },
-    purple: { glow: '#a855f7', neon: '#6366f1' },
-    emerald: { glow: '#10b981', neon: '#059669' },
-    amber: { glow: '#f59e0b', neon: '#d97706' },
+    cyan: { glow: '#00B4D8', neon: '#0077FF', rgbGlow: '0, 180, 216', rgbNeon: '0, 119, 255' },
+    purple: { glow: '#a855f7', neon: '#6366f1', rgbGlow: '168, 85, 247', rgbNeon: '99, 102, 241' },
+    emerald: { glow: '#10b981', neon: '#059669', rgbGlow: '16, 185, 129', rgbNeon: '5, 150, 105' },
+    amber: { glow: '#f59e0b', neon: '#d97706', rgbGlow: '245, 158, 11', rgbNeon: '217, 119, 6' },
   };
 
   const themeStyles = {
@@ -361,6 +361,10 @@ function App() {
       style={{
         '--cyan-glow': themeColors[theme].glow,
         '--blue-neon': themeColors[theme].neon,
+        '--theme-glow': themeColors[theme].glow,
+        '--theme-neon': themeColors[theme].neon,
+        '--theme-glow-rgb': themeColors[theme].rgbGlow,
+        '--theme-neon-rgb': themeColors[theme].rgbNeon,
       }}
     >
       <ToastContainer theme="dark" toastClassName="glass-card !border-white/10 !bg-slate-950/80 !backdrop-blur-md" />
