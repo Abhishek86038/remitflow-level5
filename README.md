@@ -128,7 +128,7 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 - **RemittanceEscrow Contract Address**: `CD2PM3DDYTWBM3W5LZ4HYK42SIQ4DDMZRKGZOBI7LU7VT55NK372BALY`
 - **Example Initialization Tx (Testnet)**: `https://stellar.expert/explorer/testnet/tx/5100ad25fcba0a843a31b11e8de822195c7067c1d74a3409c94f3af3f650a0ac`
 - **Stellar Network**: Testnet
-- **Live Demo Link**: [remitflow-six.vercel.app](https://remitflow-six.vercel.app/)
+- **Live Demo Link**: [remitflow-level5.vercel.app](https://remitflow-level5.vercel.app/)
 
 ---
 
@@ -167,9 +167,9 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 
 ## 8. Level 5: Live Demo & Evidence
 
-- **Deployed URL**: [remitflow-six.vercel.app](https://remitflow-six.vercel.app/)
+- **Deployed URL**: [remitflow-level5.vercel.app](https://remitflow-level5.vercel.app/)
 - **Demo Video**: [https://youtu.be/HDG9Dxlza0Y](https://youtu.be/HDG9Dxlza0Y)
-- **Pitch Deck**: [docs/RemitFlow_PitchDeck_2026-06-24.pptx](./docs/RemitFlow_PitchDeck_2026-06-24.pptx)
+- **Pitch Deck**: [docs/RemitFlow_PitchDeck_2026-06-25.pptx](./docs/RemitFlow_PitchDeck_2026-06-25.pptx)
 
 ### 📸 Application Screenshots
 
