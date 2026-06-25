@@ -179,6 +179,7 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 - **Real Transactions Processed**: 55+
 - **Average User Satisfaction**: 4.5/5
 - **User Feedback Form**: [Google Form Link](https://forms.google.com/remitflow)
+- **User Feedback Responses (Google Sheets)**: [Google Sheets Link](https://docs.google.com/spreadsheets/d/1TuelK-ZFMOIi77Qr8GRVVRSSe3qIfWj70EPBgrNzUPg/edit?usp=sharing)
 - **Feedback Analysis**: [data/UserFeedback_RemitFlow_2026-06-24.xlsx](./data/UserFeedback_RemitFlow_2026-06-24.xlsx)
 
 ---
@@ -189,6 +190,10 @@ Based on feedback from our 55+ users, we identified and implemented the followin
 - **Feature 1**: Export payment history as CSV. Allows users to save transaction records locally. — Commit: [96ab57c](https://github.com/Abhishek86038/remitflow-level5/commit/96ab57c)
 - **Feature 2**: Transaction receipt/invoice feature. Provides downloadable `.txt` receipts for accounting. — Commit: [cda682f](https://github.com/Abhishek86038/remitflow-level5/commit/cda682f)
 - **Feature 3**: Better error messages and loading states. Addressed UX bugs where users were unsure if transactions were processing. — Commit: [0ac2488](https://github.com/Abhishek86038/remitflow-level5/commit/0ac2488)
+- **Feature 4**: Theme Customizer & Presets. Added multi-accent styling options (Cyan, Purple, Emerald, Sapphire) to improve visual satisfaction. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
+- **Feature 5**: Recipient Address Book. Added quick-save and quick-select contacts to eliminate copy-paste address risks. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
+- **Feature 6**: Live Telemetry & Dev Console. Added a toggleable on-screen log terminal for tracking events and contract exceptions. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
+- **Feature 7**: History Filters, Search & KPI widgets. Added status check tabs, transaction lookup search, and live volume/success rate trackers. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
 
 ---
 
