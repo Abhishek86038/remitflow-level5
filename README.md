@@ -193,7 +193,7 @@ Below are the screenshots showcasing the UI features, wallet integrations, and o
 ![Telemetry Terminal](image-4.png)
 
 #### 📊 6. User Feedback Response Sheet (55 Users)
-![User Feedback Sheet]![alt text](image-6.png)
+![User Feedback Sheet](image-6.png)
 
 #### 🔗 7. Stellar Expert Testnet On-Chain Verification
 ![On-chain Verification](image-5.png)
