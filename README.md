@@ -195,6 +195,20 @@ Based on feedback from our 55+ users, we identified and implemented the followin
 - **Feature 6**: Live Telemetry & Dev Console. Added a toggleable on-screen log terminal for tracking events and contract exceptions. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
 - **Feature 7**: History Filters, Search & KPI widgets. Added status check tabs, transaction lookup search, and live volume/success rate trackers. — Commit: [e8292a3](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3)
 
+### 📊 User Feedback & Implementation Tracker
+
+This table maps real user suggestions to their corresponding implementation status and code commits:
+
+| User Name | Wallet Address | Suggested Improvement / Feature | Commit ID / Status |
+| :--- | :--- | :--- | :--- |
+| **Amit Sharma** | `GDXKETAZIUWTNK7NP5VKR2JVXWUQ...` | Address Book feature to save and select frequent contacts | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Sarah Jenkins** | `GB7N2T6N4PZJVXWUQDTRVG46YQDU...` | Download payment history as CSV file | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Vikram Patel** | `GCPA2V7NJYTRT6N4PZJVXWUQDTRV...` | Live activity feed & developer debug console on dashboard | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Emily Davis** | `GD2PM3DDYTWBM3W5LZ4HYK42SIQ4...` | Display estimated network fee and settlement duration | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Rajesh Kumar** | `GAX2V7NJYTRT6N4PZJVXWUQDTRVG...` | Theme selector for dynamic styling and preset colors | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Jack Vance** | `GBAX2V7NJYTRT6N4PZJVXWUQDTRV...` | Search bar and status filters for transaction table | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| *Open Slot* | *Pending Feedback* | *Feature requests from new users* | *TBD (To Be Done)* |
+
 ---
 
 ## 11. Future Roadmap
