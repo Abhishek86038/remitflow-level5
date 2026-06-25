@@ -201,13 +201,15 @@ This table maps real user suggestions to their corresponding implementation stat
 
 | User Name | Wallet Address | Suggested Improvement / Feature | Commit ID / Status |
 | :--- | :--- | :--- | :--- |
-| **Amit Sharma** | `GDXKETAZIUWTNK7NP5VKR2JVXWUQ...` | Address Book feature to save and select frequent contacts | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| **Sarah Jenkins** | `GB7N2T6N4PZJVXWUQDTRVG46YQDU...` | Download payment history as CSV file | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| **Vikram Patel** | `GCPA2V7NJYTRT6N4PZJVXWUQDTRV...` | Live activity feed & developer debug console on dashboard | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| **Emily Davis** | `GD2PM3DDYTWBM3W5LZ4HYK42SIQ4...` | Display estimated network fee and settlement duration | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| **Rajesh Kumar** | `GAX2V7NJYTRT6N4PZJVXWUQDTRVG...` | Theme selector for dynamic styling and preset colors | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| **Jack Vance** | `GBAX2V7NJYTRT6N4PZJVXWUQDTRV...` | Search bar and status filters for transaction table | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
-| *Open Slot* | *Pending Feedback* | *Feature requests from new users* | *TBD (To Be Done)* |
+| **Shweta sharma** | `GCHVOUEDXJRTXLUAZVBSFABIHUT636UAVL7ATZWWUBRO52RR7OP5CBI4` | Address Book to save frequent contacts & avoid copying addresses | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Shivani** | `GBKYSKQ7VFVFCAEKEXCOSLZC5RK3EPVDQMLIUQJ3HIUA4TKBOVC7ZQVW` | CSV export for payment history table to view in Excel | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Shreya** | `GASTVZNEON3OSJ5R5YOELNWY7O622OYZ74XWOEQJOUAFPFPDBWEM45US` | On-screen live telemetry terminal to monitor contract logs/events | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **rohit kushwaha** | `GCSDJAMZ4JZWAY4RSF5PJILNZG7AJUUKICEBMUE2HDP56BUW6NLBUB4I` | Theme switcher with dynamic presets (Neon purple, emerald, sapphire) | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Ritesh kant** | `GALXUJI5TIYMUNPJT6Y3FEOYDCXSN3TP5KLRC5VRENJUKUNU67MN67WV` | Estimated network fees and settlement speed details before send | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Rishi Singh** | `GDTA4AJE34CXM4BUTPLQVBJYGOM2JZGGJ5TWH5RC6QZVU5H2KIQA4RZJ` | Search box and status category tabs to filter transaction history | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Ranjan mehta** | `GA5WQTVIO6XJWFML7VIOUS3JRWO3EVNA7J7S24K4MCW4OE3HYEAH357Z` | Total volume, active escrows, and success rate KPI widgets | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Nitin Kapoor** | `GCADSJWNBJD7MBH5RY5HCYJH2DKMXOYZVJLTGLEOKSDFE2ZJE3ZXG74P` | Visual progress stepper tracking transaction flow (Sent -> Released) | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
+| **Suraj Kumar** | `GBAKOBGSHZ5PORMNC5OKEGQQ7AVNCKBSYSFN436QNIO7MIEHCDDERZLH` | Session clear / disconnect button and instant pop-up toast alerts | [`e8292a3`](https://github.com/Abhishek86038/remitflow-level5/commit/e8292a3) |
 
 ---
 
