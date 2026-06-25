@@ -264,8 +264,12 @@ function App() {
 
   const handleExportCSV = () => {
     if (history.length === 0) return toast.error('No history to export');
-    const headers = ['ID', 'Recipient', 'Amount (XLM)', 'Status'];
-    const rows = history.map(t => `${t.id},${t.recipient},${t.amount},${t.status}`);
+    const headers = ['ID', 'Recipient Name', 'Recipient Address', 'Amount (XLM)', 'Status'];
+    const rows = history.map(t => {
+      const contact = contacts.find(c => c.address === t.recipient);
+      const name = contact ? contact.name : 'Unknown';
+      return `"${t.id}","${name}","${t.recipient}","${t.amount}","${t.status}"`;
+    });
     const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
