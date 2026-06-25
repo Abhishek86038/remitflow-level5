@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Wallet, ArrowRight, ShieldCheck, Lock, CheckCircle, Activity, History, Sparkles, Search, UserPlus, Trash2, Terminal, X, TrendingUp, Percent, Zap, Palette } from 'lucide-react';
+import { Wallet, ArrowRight, ShieldCheck, Lock, CheckCircle, Activity, History, Sparkles, Search, UserPlus, Trash2, Terminal, X, TrendingUp, Percent, Zap, Palette, Info, AlertTriangle } from 'lucide-react';
 import { connectWallet } from './wallet';
 import { getLimit } from './complianceContract';
 import { deposit, releaseFunds, getTransferHistory } from './escrowContract';
@@ -552,31 +552,50 @@ function App() {
                 </div>
               </div>
 
-              {/* Smart Estimator */}
-              {amount && Number(amount) > 0 && (
-                <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] space-y-1.5 animate-fadeIn">
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>Est. Network Fee:</span>
-                    <span className="font-semibold text-white">0.0001 XLM</span>
-                  </div>
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>Est. Settlement:</span>
-                    <span className="font-semibold text-emerald-400 flex items-center gap-1">
-                      <Zap size={10} className="animate-pulse" /> ~3-5 Sec
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>Size Check:</span>
-                    {Number(amount) <= limit ? (
-                      <span className="text-emerald-400 font-semibold flex items-center gap-0.5">
-                        <CheckCircle size={10} /> Valid compliance size
-                      </span>
-                    ) : (
-                      <span className="text-red-400 font-semibold">Exceeds limit ({limit} XLM)</span>
-                    )}
-                  </div>
+              {/* Premium Pre-Transaction Estimator */}
+              <div className="p-3 bg-white/[0.02] border border-white/5 rounded-xl text-[10px] space-y-1.5 animate-fadeIn">
+                <div className="flex justify-between items-center text-slate-400">
+                  <span className="flex items-center gap-1">
+                    <Info size={10} className="text-slate-500" /> Est. Network Fee:
+                  </span>
+                  <span className="font-semibold text-white">0.0001 XLM</span>
                 </div>
-              )}
+                <div className="flex justify-between items-center text-slate-400">
+                  <span className="flex items-center gap-1">
+                    <Zap size={10} className="text-amber-400 animate-pulse" /> Est. Settlement:
+                  </span>
+                  <span className="font-semibold text-emerald-400 flex items-center gap-1">
+                    ~3-5 Sec (Stellar)
+                  </span>
+                </div>
+                {amount && Number(amount) > 0 ? (
+                  <>
+                    <div className="h-px bg-white/5 my-1"></div>
+                    <div className="flex justify-between items-center text-slate-300 font-medium">
+                      <span>Total Cost:</span>
+                      <span className="font-semibold text-white">
+                        {(Number(amount) + 0.0001).toFixed(4)} XLM
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-slate-400">
+                      <span>Compliance Check:</span>
+                      {Number(amount) <= limit ? (
+                        <span className="text-emerald-400 font-semibold flex items-center gap-0.5">
+                          <CheckCircle size={10} /> Valid compliance size
+                        </span>
+                      ) : (
+                        <span className="text-red-400 font-semibold flex items-center gap-0.5">
+                          <AlertTriangle size={10} className="text-red-400 animate-bounce" /> Exceeds limit ({limit} XLM)
+                        </span>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-[9px] text-slate-600 italic text-center pt-1 border-t border-white/5">
+                    Enter amount to calculate total transaction cost
+                  </div>
+                )}
+              </div>
               
               <button 
                 disabled={loading}
