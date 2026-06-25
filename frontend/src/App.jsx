@@ -846,21 +846,33 @@ function App() {
                         {steps.map((step, idx) => {
                           const isCompleted = idx <= currentStep;
                           const isActive = idx === currentStep;
+
+                          let stepIcon;
+                          if (idx === 0) stepIcon = <ArrowRight size={14} className={isActive ? 'animate-pulse' : ''} />;
+                          else if (idx === 1) stepIcon = <ShieldCheck size={14} className={isActive ? 'animate-pulse' : ''} />;
+                          else if (idx === 2) stepIcon = <Lock size={14} className={isActive ? 'animate-pulse' : ''} />;
+                          else stepIcon = <CheckCircle size={14} className={isActive ? 'animate-pulse' : ''} />;
+
                           return (
                             <div key={idx} className="flex flex-col items-center">
                               <div 
-                                className={`w-8 h-8 rounded-full flex items-center justify-center z-10 transition-all duration-500 ${
+                                className={`w-9 h-9 rounded-full flex items-center justify-center z-10 transition-all duration-500 ${
                                   isCompleted 
-                                    ? 'shadow-md text-white font-bold' 
+                                    ? 'shadow-lg text-white font-bold' 
                                     : 'bg-slate-900 border border-white/5 text-slate-600'
-                                } ${isActive ? 'scale-110' : ''}`}
+                                } ${isActive ? 'scale-110 ring-4 ring-offset-4 ring-offset-slate-950 animate-pulse' : ''}`}
                                 style={{
                                   ...(isCompleted ? themeStyles.gradientBg : {}),
-                                  boxShadow: isCompleted ? `0 0 10px ${themeColors[theme].glow}44` : 'none',
-                                  borderColor: isActive ? themeColors[theme].glow : 'rgba(255,255,255,0.05)'
+                                  boxShadow: isCompleted ? '0 0 12px rgba(var(--theme-glow-rgb), 0.3)' : 'none',
+                                  borderColor: isActive ? 'var(--theme-glow)' : 'rgba(255,255,255,0.05)',
+                                  '--tw-ring-color': 'rgba(var(--theme-glow-rgb), 0.3)'
                                 }}
                               >
-                                {isCompleted ? <CheckCircle size={15} /> : <Lock size={12} />}
+                                {isActive && loading ? (
+                                  <Activity size={14} className="animate-spin text-white" />
+                                ) : (
+                                  stepIcon
+                                )}
                               </div>
                               <span className={`mt-3 text-[10px] font-bold uppercase tracking-wider text-center w-20 ${
                                 isCompleted ? 'text-slate-300' : 'text-slate-600'
