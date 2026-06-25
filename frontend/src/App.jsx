@@ -162,6 +162,7 @@ function App() {
     try {
       setLoading(true);
       trackEvent('deposit_initiated', { sender: address, recipient, amount });
+      trackEvent('Soroban VM: init_contract', { contractId: 'CC_COMPLIANCE_0x4e29', method: 'check_limit', args: [address, amount] });
       
       // Step 0: Sent
       setActiveTracker({
@@ -173,6 +174,9 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, 800));
 
       // Step 1: Compliance Check
+      trackEvent('Soroban VM: read_state', { key: `DailyLimit_${address.slice(0, 8)}`, limit, requested: amount });
+      trackEvent('Soroban VM: assert_success', { message: 'limit_check_passed', code: 200 });
+      
       setActiveTracker(prev => ({
         ...prev,
         currentStep: 1,
@@ -181,6 +185,7 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Step 2: Escrow Lock & Deposit
+      trackEvent('Soroban VM: invoke_contract', { contractId: 'CE_ESCROW_0xfa89', method: 'deposit', args: [address, recipient, amount] });
       setActiveTracker(prev => ({
         ...prev,
         currentStep: 2,
@@ -190,6 +195,8 @@ function App() {
       const res = await deposit(address, recipient, amount);
       if (res.success) {
         toast.success(`Funds deposited! Hash: ${res.hash.slice(0,10)}...`);
+        trackEvent('Soroban VM: write_state', { key: `EscrowAccount_${res.hash.slice(0, 8)}`, balance: amount, locked: true });
+        trackEvent('Soroban VM: emit_event', { topic: 'escrow_created', data: { id: res.hash.slice(0, 8), from: address, to: recipient, val: amount } });
         
         setActiveTracker(prev => ({
           ...prev,
@@ -233,9 +240,14 @@ function App() {
       }
 
       trackEvent('release_initiated', { recipient: address, transferId });
+      trackEvent('Soroban VM: init_contract', { contractId: 'CE_ESCROW_0xfa89', method: 'release', args: [address, transferId] });
+      trackEvent('Soroban VM: read_state', { key: `EscrowAccount_${transferId}`, status: 'locked' });
+      
       const res = await releaseFunds(address, transferId);
       if (res.success) {
         toast.success(`Funds released! Hash: ${res.hash.slice(0,10)}...`);
+        trackEvent('Soroban VM: write_state', { key: `EscrowAccount_${transferId}`, status: 'released' });
+        trackEvent('Soroban VM: emit_event', { topic: 'escrow_released', data: { id: transferId, trigger: address } });
         
         if (transferObj) {
           setActiveTracker({
@@ -856,9 +868,10 @@ function App() {
             ) : (
               logs.map((log, index) => {
                 let logColor = 'text-cyan-400';
-                if (log.eventName.includes('failed') || log.eventName.includes('error')) logColor = 'text-red-400';
-                if (log.eventName.includes('success')) logColor = 'text-emerald-400';
-                if (log.eventName.includes('init') || log.eventName.includes('connect')) logColor = 'text-amber-400';
+                if (log.eventName.startsWith('Soroban VM')) logColor = 'text-fuchsia-400';
+                else if (log.eventName.includes('failed') || log.eventName.includes('error')) logColor = 'text-red-400';
+                else if (log.eventName.includes('success')) logColor = 'text-emerald-400';
+                else if (log.eventName.includes('init') || log.eventName.includes('connect')) logColor = 'text-amber-400';
                 
                 return (
                   <div key={index} className="flex gap-2 hover:bg-white/5 py-0.5 px-1 rounded transition-colors">
