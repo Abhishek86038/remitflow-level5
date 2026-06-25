@@ -26,6 +26,7 @@ function App() {
   const [devMode, setDevMode] = useState(false);
   const [logs, setLogs] = useState([]);
   const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('remitflow_contacts') || '[]'));
+  const [txNicknames, setTxNicknames] = useState(() => JSON.parse(localStorage.getItem('remitflow_tx_nicknames') || '{}'));
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [theme, setTheme] = useState(() => localStorage.getItem('remitflow_theme') || 'cyan');
@@ -102,6 +103,29 @@ function App() {
     const fetchedHistory = await getTransferHistory(addr);
     setHistory(fetchedHistory);
  
+    // Lock in historical nicknames so they do not change retroactively
+    try {
+      const storedTxNicknames = JSON.parse(localStorage.getItem('remitflow_tx_nicknames') || '{}');
+      let updated = false;
+      const currentContacts = JSON.parse(localStorage.getItem('remitflow_contacts') || '[]');
+      
+      fetchedHistory.forEach(t => {
+        if (!storedTxNicknames[t.id]) {
+          const contact = currentContacts.find(c => c.address === t.recipient);
+          if (contact) {
+            storedTxNicknames[t.id] = contact.name;
+            updated = true;
+          }
+        }
+      });
+      if (updated) {
+        localStorage.setItem('remitflow_tx_nicknames', JSON.stringify(storedTxNicknames));
+        setTxNicknames(storedTxNicknames);
+      }
+    } catch (err) {
+      console.error('Failed to update historical tx nicknames', err);
+    }
+
     const fetchedEvents = await getRecentEvents();
     setEvents(fetchedEvents);
   };
@@ -278,8 +302,7 @@ function App() {
     if (history.length === 0) return toast.error('No history to export');
     const headers = ['ID', 'Recipient Name', 'Recipient Address', 'Amount (XLM)', 'Status'];
     const rows = history.map(t => {
-      const contact = contacts.find(c => c.address === t.recipient);
-      const name = contact ? contact.name : 'Unknown';
+      const name = txNicknames[t.id] || (contacts.find(c => c.address === t.recipient)?.name || 'Unknown');
       return `"${t.id}","${name}","${t.recipient}","${t.amount}","${t.status}"`;
     });
     const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join("\n");
@@ -322,8 +345,12 @@ function App() {
 
   const activeEscrows = history.filter(t => t.status === 'Pending').length;
 
-  const getRecipientDisplay = (addr) => {
+  const getRecipientDisplay = (addr, txId = null) => {
     if (!addr) return '';
+    const historicalName = txId ? txNicknames[txId] : null;
+    if (historicalName) {
+      return `${historicalName} (${addr.slice(0, 4)}...${addr.slice(-4)})`;
+    }
     const contact = contacts.find(c => c.address === addr);
     return contact ? `${contact.name} (${addr.slice(0, 4)}...${addr.slice(-4)})` : `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
@@ -674,7 +701,7 @@ function App() {
                         <tr key={t.id} className="hover:bg-white/[0.02] transition-colors group">
                           <td className="py-2.5 text-xs font-medium text-slate-400">#{t.id}</td>
                           <td className="py-2.5 font-mono text-xs text-slate-300" title={t.recipient}>
-                            {getRecipientDisplay(t.recipient)}
+                            {getRecipientDisplay(t.recipient, t.id)}
                           </td>
                           <td className="py-2.5 text-xs font-semibold text-white">{t.amount} XLM</td>
                           <td className="py-2.5">
@@ -741,7 +768,7 @@ function App() {
                         style={{ color: themeColors[theme].glow }}
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" style={{ backgroundColor: themeColors[theme].glow }}></span>
-                        {activeObj.label} ({activeObj.amount} XLM to {getRecipientDisplay(activeObj.recipient)})
+                        {activeObj.label} ({activeObj.amount} XLM to {getRecipientDisplay(activeObj.recipient, activeObj.id || null)})
                       </span>
                     </div>
                     
