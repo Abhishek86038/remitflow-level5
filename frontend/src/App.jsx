@@ -331,8 +331,10 @@ function App() {
 
   // Derived dashboard metrics & history filtering
   const filteredHistory = history.filter(t => {
+    const name = txNicknames[t.id] || contacts.find(c => c.address === t.recipient)?.name || '';
     const matchesSearch = (t.id || '').toString().toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          (t.recipient || '').toLowerCase().includes(searchQuery.toLowerCase());
+                          (t.recipient || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          name.toLowerCase().includes(searchQuery.toLowerCase());
     if (statusFilter === 'All') return matchesSearch;
     return matchesSearch && (t.status || '').toLowerCase() === statusFilter.toLowerCase();
   });
@@ -690,7 +692,7 @@ function App() {
               <div className="relative flex-grow sm:max-w-xs">
                 <input
                   type="text"
-                  placeholder="Search by ID or Address..."
+                  placeholder="Search by ID, Address or Nickname..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-black/20 border border-white/5 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/50"
