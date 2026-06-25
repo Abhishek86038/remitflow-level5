@@ -171,6 +171,33 @@ No custom `.env` is required for local dev, as RPC addresses are preconfigured t
 - **Demo Video**: [https://youtu.be/HDG9Dxlza0Y](https://youtu.be/HDG9Dxlza0Y)
 - **Pitch Deck**: [docs/RemitFlow_PitchDeck_2026-06-24.pptx](./docs/RemitFlow_PitchDeck_2026-06-24.pptx)
 
+### 📸 Application Screenshots
+
+Below are the screenshots showcasing the UI features, wallet integrations, and on-chain telemetry implemented for the Level 5 requirements. 
+
+*(Note: Save your screenshot images inside the `docs/screenshots/` folder using the exact filenames listed below to display them).*
+
+#### 🖥️ 1. Main Dashboard Overview
+![Dashboard Overview](./docs/screenshots/dashboard.png)
+
+#### 🔌 2. Freighter Wallet Connection & Toast Notifications
+![Wallet Connect](./docs/screenshots/wallet_connect.png)
+
+#### 🔄 3. Multi-Step Transaction Stepper
+![Transaction Stepper](./docs/screenshots/transaction_stepper.png)
+
+#### 📔 4. Recipient Address Book
+![Recipient Address Book](./docs/screenshots/address_book.png)
+
+#### 🎛️ 5. Live Telemetry Debug Terminal
+![Telemetry Terminal](./docs/screenshots/live_telemetry.png)
+
+#### 📊 6. User Feedback Response Sheet (55 Users)
+![User Feedback Sheet](./docs/screenshots/feedback_sheet.png)
+
+#### 🔗 7. Stellar Expert Testnet On-Chain Verification
+![On-chain Verification](./docs/screenshots/onchain_explorer.png)
+
 ---
 
 ## 9. User Growth Metrics (Level 5)
