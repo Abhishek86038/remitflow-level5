@@ -178,26 +178,25 @@ Below are the screenshots showcasing the UI features, wallet integrations, and o
 *(Note: Save your screenshot images inside the `docs/screenshots/` folder using the exact filenames listed below to display them).*
 
 #### 🖥️ 1. Main Dashboard Overview
-![Dashboard Overview](./docs/screenshots/dashboard.png)
+![Dashboard Overview](image.png)
 
 #### 🔌 2. Freighter Wallet Connection & Toast Notifications
-![Wallet Connect](./docs/screenshots/wallet_connect.png)
+![Wallet Connect](image-1.png)
 
 #### 🔄 3. Multi-Step Transaction Stepper
-![Transaction Stepper](./docs/screenshots/transaction_stepper.png)
+![Transaction Stepper](image-2.png)
 
 #### 📔 4. Recipient Address Book
-![Recipient Address Book](./docs/screenshots/address_book.png)
+![Recipient Address Book](image-3.png)
 
 #### 🎛️ 5. Live Telemetry Debug Terminal
-![Telemetry Terminal](./docs/screenshots/live_telemetry.png)
+![Telemetry Terminal](image-4.png)
 
 #### 📊 6. User Feedback Response Sheet (55 Users)
-![User Feedback Sheet](./docs/screenshots/feedback_sheet.png)
+![User Feedback Sheet]![alt text](image-6.png)
 
 #### 🔗 7. Stellar Expert Testnet On-Chain Verification
-![On-chain Verification](./docs/screenshots/onchain_explorer.png)
-
+![On-chain Verification](image-5.png)
 ---
 
 ## 9. User Growth Metrics (Level 5)
